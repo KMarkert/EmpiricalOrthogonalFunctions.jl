@@ -33,8 +33,8 @@ spatialsignal = reshape(eofs(reof),(size(datain)[1:2]..., nmodes))
 ```
 
 When plotting the first four spatial signals we will get the following plot.
-![](docs/src/assets/spatialmodes.png)
+![](assets/spatialmodes.png)
 
 Below is the temporal signals corresponding to the spatial signals above
 
-![](docs/src/assets/temporalmodes.png)
+![](assets/temporalmodes.png)
