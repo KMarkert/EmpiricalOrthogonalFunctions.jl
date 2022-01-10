@@ -1,12 +1,12 @@
-# EmpiricalOrthoFuncs.jl API
+# EmpiricalOrthogonalFunctions.jl API
 
-## EmpiricalOrthoFuncs Types
+## EmpiricalOrthogonalFunctions Types
 
 ```@docs
-EmpiricalOrthoFunc
+EmpiricalOrthogonalFunction
 ```
 
-## EmpiricalOrthoFuncs Methods
+## EmpiricalOrthogonalFunctions Methods
 
 ```@docs
 pcs

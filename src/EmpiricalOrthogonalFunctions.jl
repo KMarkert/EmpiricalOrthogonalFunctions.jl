@@ -1,6 +1,6 @@
 __precompile__()
 
-module EmpiricalOrthoFuncs
+module EmpiricalOrthogonalFunctions
 
 using Statistics
 using LinearAlgebra
@@ -10,7 +10,7 @@ import Base.truncate
 include("eoftypes.jl")
 include("eoffuncs.jl")
 
-export EmpiricalOrthoFunc,
+export EmpiricalOrthogonalFunction,
     pcs,
     eofs,
     correlationmap,

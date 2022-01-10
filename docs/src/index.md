@@ -1,4 +1,4 @@
-# EmpiricalOrthoFuncs.jl
+# EmpiricalOrthogonalFunctions.jl
 Julia package for calculating Empirical Orthogonal Functions from spatiotemporal datasets.
 
 This package was heavily inspired by the [`eofs` Python package](https://github.com/ajdawson/eofs) and a good amount of code was translated to Julia from this package.
@@ -7,7 +7,7 @@ This package was heavily inspired by the [`eofs` Python package](https://github.
 
 ```julia
 using Pkg
-Pkg.add("EmpiricalOrthoFuncs")
+Pkg.add("EmpiricalOrthogonalFunctions")
 ```
 
 ##  Example
@@ -15,7 +15,7 @@ Pkg.add("EmpiricalOrthoFuncs")
 This example will highlight extracting the spatial and temporal flooding signals from a series of satellite imagery over Southeast Asia
 
 ```julia
-using EmpiricalOrthoFuncs
+using EmpiricalOrthogonalFunctions
 using NCDatasets
 
 #load in the data
@@ -23,7 +23,7 @@ ds = NCDataset("sar_stack.nc","r");
 datain = ds["VV"][:];
 
 # apply EOF
-eof = EmpiricalOrthoFunc(datain; timedim=3)
+eof = EmpiricalOrthogonalFunction(datain; timedim=3)
 
 # rotate the EOFs using varimax rotations
 nmodes = 4

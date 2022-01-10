@@ -1,4 +1,4 @@
-name = "EmpiricalOrthoFuncs"
+name = "EmpiricalOrthogonalFunctions"
 uuid = "63ff9c73-14d6-49bd-be05-5ad278f77d6a"
 authors = ["kmarkert <kel.markert@gmail.com>"]
 version = "0.1.0"

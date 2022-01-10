@@ -1,20 +1,20 @@
-# This file defines the EmpiricalOrthoFunc types
+# This file defines the EmpiricalOrthogonalFunction types
 
 # abstract EOF type
 """
 Abstract type to build subtypes from
 """
-abstract type AbstractEmpiricalOrthoFunc end
+abstract type AbstractEmpiricalOrthogonalFunction end
 
 # eof struct for 2d data (space, time)
 """
-    EmpiricalOrthoFunc(dataset; center=true, ddof=1)
+    EmpiricalOrthogonalFunction(dataset; center=true, ddof=1)
 
 Create an Empirical Orthogonal Function object.
 The EOF solution is computed at initialization time. Method
 calls are used to retrieve or update computed quantities.
 """
-mutable struct EmpiricalOrthoFunc <: AbstractEmpiricalOrthoFunc
+mutable struct EmpiricalOrthogonalFunction <: AbstractEmpiricalOrthogonalFunction
     ""
     dataset::AbstractArray{<:Any,2}
 
@@ -29,7 +29,7 @@ mutable struct EmpiricalOrthoFunc <: AbstractEmpiricalOrthoFunc
 
     pcs::AbstractArray{<:Any,2}
 
-    EmpiricalOrthoFunc(
+    EmpiricalOrthogonalFunction(
         dataset::AbstractArray{<:Any,2},
         center::AbstractArray{<:Any,2},
         valididx::AbstractArray{Int64,1},
@@ -40,7 +40,7 @@ mutable struct EmpiricalOrthoFunc <: AbstractEmpiricalOrthoFunc
 
     """
     """
-    function EmpiricalOrthoFunc(
+    function EmpiricalOrthogonalFunction(
         dataset::AbstractArray{<:Any,2};
         center::Bool = true,
         ddof::Int = 1,
@@ -95,7 +95,7 @@ mutable struct EmpiricalOrthoFunc <: AbstractEmpiricalOrthoFunc
             pcs[:, i] = U[:, i] * S[i]
         end
 
-        EmpiricalOrthoFunc(
+        EmpiricalOrthogonalFunction(
             dataset,
             spatial_mean,
             isnotmissing,
@@ -108,7 +108,7 @@ mutable struct EmpiricalOrthoFunc <: AbstractEmpiricalOrthoFunc
     """
 
     """
-    function EmpiricalOrthoFunc(
+    function EmpiricalOrthogonalFunction(
         dataset::AbstractArray{<:Any,3};
         timedim::Int = 3,
         kwargs...,
@@ -124,7 +124,7 @@ mutable struct EmpiricalOrthoFunc <: AbstractEmpiricalOrthoFunc
 
         flattened = reshape(dataset, (time_shape, prod(spatial_shape)))
 
-        EmpiricalOrthoFunc(flattened; kwargs...)
+        EmpiricalOrthogonalFunction(flattened; kwargs...)
     end
 
 end

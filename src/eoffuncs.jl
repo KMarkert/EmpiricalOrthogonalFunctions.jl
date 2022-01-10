@@ -3,7 +3,7 @@
 Extract the principal component time series (PCs)
 """
 function pcs(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
     scaling::Symbol = :none,
 )
@@ -37,7 +37,7 @@ end
 Extract the empirical orthogonal functions (EOFs)
 """
 function eofs(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
     scaling::Symbol = :none,
 )
@@ -74,7 +74,7 @@ and the time series of the `eof` input *dataset* at each grid
 point.
 """
 function correlationmap(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     outshape::Union{Nothing,Tuple{Int,Int}} = nothing,
     n::Union{Nothing,Int} = nothing,
 )
@@ -109,7 +109,7 @@ and the time series of the `eof` input *dataset* at each grid
 point.
 """
 function covariancemap(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     outshape::Union{Nothing,Tuple{Int,Int}} = nothing,
     n::Union{Nothing,Int} = nothing,
     ddof::Int = 1,
@@ -136,7 +136,7 @@ end
 """
 Extract the eigenvalues (decreasing variances) associated with each EOF.
 """
-function eigenvalues(eof::EmpiricalOrthoFunc; n::Union{Nothing,Int} = nothing)
+function eigenvalues(eof::EmpiricalOrthogonalFunction; n::Union{Nothing,Int} = nothing)
     if isnothing(n)
         n = length(eof.eigenvals)
     end
@@ -149,7 +149,7 @@ The fraction of the total variance explained by each EOF mode,
 values between 0 and 1 inclusive.
 """
 function variancefraction(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
 )
     return eigenvalues(eof; n = n) / totalanomalyvar(eof)
@@ -159,7 +159,7 @@ end
 Total variance associated with the field of anomalies (the sum
 of the eigenvalues).
 """
-function totalanomalyvar(eof::EmpiricalOrthoFunc)
+function totalanomalyvar(eof::EmpiricalOrthogonalFunction)
     return sum(eof.eigenvals)
 end
 
@@ -171,7 +171,7 @@ independent realizations. If this assumption is not valid then
 the result may be inappropriate.
 """
 function northtest(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
     scaled::Bool = false,
 )
@@ -197,7 +197,7 @@ function projectfield(eof_arr::Array{<:Any,2}, field::Array{<:Any,2})
 end
 
 function projectfield(
-    eof::EmpiricalOrthoFunc,
+    eof::EmpiricalOrthogonalFunction,
     field::Array{<:Any,2};
     n::Union{Nothing,Int} = nothing,
     scaling::Symbol = :none,
@@ -213,7 +213,7 @@ function projectfield(
 end
 
 function projectfield(
-    eof::EmpiricalOrthoFunc,
+    eof::EmpiricalOrthogonalFunction,
     field::Array{<:Any,3};
     n::Union{Nothing,Int} = nothing,
     scaling::Symbol = :none,
@@ -244,7 +244,7 @@ end
 Reconstructed input data field based on a subset of EOFs.
 """
 function reconstruct(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
     uncenter::Bool = true,
 )
@@ -308,7 +308,7 @@ to create new PCs. Additionally new EOFs and PCs are ordered in decreasing
 variance
 """
 function orthorotation(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
     method::Symbol = :varimax,
     maxiter::Int = 50,
@@ -338,7 +338,7 @@ function orthorotation(
     sorted_reofs = reofs[:, sortedidx]
     sorted_pcs = projected_pcs[:, sortedidx]
 
-    return EmpiricalOrthoFunc(
+    return EmpiricalOrthogonalFunction(
         eof.dataset,
         eof.center,
         eof.valididx,
@@ -352,7 +352,7 @@ end
 Inplace orthorotation that will override the data structure of the input EOF object
 """
 function orthorotation!(
-    eof::EmpiricalOrthoFunc;
+    eof::EmpiricalOrthogonalFunction;
     n::Union{Nothing,Int} = nothing,
     method::Symbol = :varimax,
     maxiter::Int = 50,
@@ -391,14 +391,14 @@ function orthorotation!(
 end
 
 """
-Apply truncate inplace on EOF data structure
+Truncate the EOF data structure to trim unneccesay modes
 """
-function truncate(eof::EmpiricalOrthoFunc, n::Int)
+function truncate(eof::EmpiricalOrthogonalFunction, n::Int)
     pcs_trunc = eof.pcs[:, 1:n]
     eofs_trunc = eof.eofs[:, 1:n]
     ev_trunc = eof.eigenvals[1:n]
 
-    return EmpiricalOrthoFunc(
+    return EmpiricalOrthogonalFunction(
         eof.dataset,
         eof.center,
         eof.valididx,
@@ -411,13 +411,9 @@ end
 """
 Apply truncate inplace on EOF data structure
 """
-function truncate!(eof::EmpiricalOrthoFunc, n::Int)
+function truncate!(eof::EmpiricalOrthogonalFunction, n::Int)
     eof.pcs = eof.pcs[:, 1:n]
     eof.eofs = eof.eofs[:, 1:n]
     eof.eigenvals = eof.eigenvals[1:n]
     return
 end
-
-"""
-Truncate the EOF data structure to trim unneccesay modes
-"""
