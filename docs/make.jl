@@ -1,18 +1,18 @@
 push!(LOAD_PATH, "../src/")
 
-using Documenter, EmpiricalOrthoFuncs
+using Documenter, EmpiricalOrthogonalFunctions
 
 pages = ["Home" => "index.md", "API" => "api.md"]
 
 makedocs(;
-    modules = [EmpiricalOrthoFuncs],
+    modules = [EmpiricalOrthogonalFunctions],
     authors = "Kel Markert",
-    repo = "https://github.com/KMarkert/EmpiricalOrthoFuncs.jl/blob/{commit}{path}#L{line}",
-    sitename = "EmpiricalOrthoFuncs.jl",
+    repo = "https://github.com/KMarkert/EmpiricalOrthogonalFunctions.jl/blob/{commit}{path}#L{line}",
+    sitename = "EmpiricalOrthogonalFunctions.jl",
     pages = pages,
 )
 
 deploydocs(;
-    repo = "github.com/KMarkert/EmpiricalOrthoFuncs.jl.git",
+    repo = "github.com/KMarkert/EmpiricalOrthogonalFunctions.jl.git",
     devbranch = "main",
 )
