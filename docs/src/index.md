@@ -1,6 +1,8 @@
 # EmpiricalOrthoFuncs.jl
 Julia package for calculating Empirical Orthogonal Functions from spatiotemporal datasets.
 
+This package was heavily inspired by the [`eofs` Python package](https://github.com/ajdawson/eofs) and a good amount of code was translated to Julia from this package.
+
 ## Installation
 
 ```julia
@@ -27,7 +29,8 @@ eof = EmpiricalOrthoFunc(datain; timedim=3)
 nmodes = 4
 reof = orthorotation(eof,n=nmodes)
 
-# extract out the signals and reshape if necessary
+# extract out the signals
+# the spatial signals are reshaped back to the original dimensions
 temporalsignal = pcs(reof)
 spatialsignal = reshape(eofs(reof),(size(datain)[1:2]..., nmodes))
 ```
